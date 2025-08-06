@@ -33,29 +33,23 @@ export interface GameState {
   isAIThinking: boolean
 }
 
-export interface ThemeState {
+export interface Theme {
   isDarkMode: boolean
   primaryColor: string
   secondaryColor: string
   backgroundColor: string
   textColor: string
+  boardBackground?: string
+  cellBackground?: string
+  cellBackgroundHover?: string
+  cellBackgroundDisabled?: string
+  player1Color?: string
+  player2Color?: string
 }
+
+export type ThemeState = Theme
 
 export interface RootState {
   game: GameState
   theme: ThemeState
-}
-
-export interface Theme {
-  isDarkMode: boolean
-  backgroundColor: string
-  textColor: string
-  primaryColor: string
-  secondaryColor: string
-  boardBackground: string
-  cellBackground: string
-  cellBackgroundHover: string
-  cellBackgroundDisabled: string
-  player1Color: string
-  player2Color: string
 }

@@ -1,13 +1,10 @@
 import 'styled-components'
+import { Theme } from '../types'
 
 declare module 'styled-components' {
-  export interface DefaultTheme {
-    isDarkMode: boolean
-    backgroundColor: string
-    textColor: string
-    primaryColor: string
-    secondaryColor: string
-    boardBackground: string
+  export interface DefaultTheme extends Theme {
+  }
+}
     cellBackground: string
     cellBackgroundHover: string
     cellBackgroundDisabled: string

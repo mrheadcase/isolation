@@ -8,15 +8,7 @@ import {
   toggleTutorial
 } from '../store/gameSlice'
 import { toggleTheme } from '../store/themeSlice'
-import type { PlayerColor, GameMode, AIDifficulty, GameState, RootState } from '../types'
-
-interface ThemeState {
-  isDarkMode: boolean
-  primaryColor: string
-  secondaryColor: string
-  backgroundColor: string
-  textColor: string
-}
+import type { PlayerColor, AIDifficulty, GameState, RootState, ThemeState } from '../types'
 
 const Panel = styled.div`
   background-color: ${props => props.theme.secondaryColor};
