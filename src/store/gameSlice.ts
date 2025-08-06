@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { Position, PlayerColor, GameMode, AIDifficulty, GameState, Player, Move } from '../types'
 
-export type PlayerColor = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange'
-export type GameMode = 'pvp' | 'ai'
-export type AIDifficulty = 'easy' | 'medium' | 'hard'
-interface Position {
+interface GamePosition {
   row: number
   col: number
 }
