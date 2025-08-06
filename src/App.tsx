@@ -33,7 +33,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
+      <GlobalStyle theme={theme} />
       <AppContainer>
         <GameContainer>
           <GameBoard />

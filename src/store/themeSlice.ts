@@ -1,12 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface ThemeState {
-  isDarkMode: boolean
-  primaryColor: string
-  secondaryColor: string
-  backgroundColor: string
-  textColor: string
-}
+import { createSlice } from '@reduxjs/toolkit'
+import type { ThemeState } from '../types'
 
 const initialState: ThemeState = {
   isDarkMode: true,
