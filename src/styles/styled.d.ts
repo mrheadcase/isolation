@@ -1,17 +1,5 @@
 import 'styled-components'
+import { ThemeState } from '../types'
 
 declare module 'styled-components' {
-  export interface DefaultTheme {
-    isDarkMode: boolean
-    backgroundColor: string
-    textColor: string
-    primaryColor: string
-    secondaryColor: string
-    boardBackground: string
-    cellBackground: string
-    cellBackgroundHover: string
-    cellBackgroundDisabled: string
-    player1Color: string
-    player2Color: string
-  }
-}
+  export interface DefaultTheme extends ThemeState {}
