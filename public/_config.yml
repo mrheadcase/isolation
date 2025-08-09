@@ -1,0 +1,7 @@
+# GitHub Pages configuration
+plugins:
+  - jekyll-redirect-from
+include:
+  - ".htaccess"
+  - ".nojekyll"
+  - "web.config"
