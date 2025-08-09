@@ -1,36 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { Position, PlayerColor, GameMode, AIDifficulty, GameState, Player, Move } from '../types'
-
-interface GamePosition {
-  row: number
-  col: number
-}
-
-interface Player {
-  color: PlayerColor
-  position: Position
-  score: number
-}
-
-interface Move {
-  player: 1 | 2
-  from: Position
-  to: Position
-  removedSquare: Position | null
-}
-
-interface GameState {
-  board: (boolean | null)[][]
-  currentPlayer: 1 | 2
-  player1: Player
-  player2: Player
-  gameMode: GameMode
-  aiDifficulty: AIDifficulty
-  moveHistory: Move[]
-  isGameOver: boolean
-  showTutorial: boolean
-  isAIThinking: boolean
-}
+import type { Position, PlayerColor, GameMode, AIDifficulty, GameState } from '../types'
 
 const initialState: GameState = {
   board: Array(7).fill(null).map(() => Array(7).fill(true)),

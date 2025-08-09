@@ -3,16 +3,15 @@ export interface Position {
   col: number
 }
 
+export type PlayerColor = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange'
+export type GameMode = 'pvp' | 'ai'
+export type AIDifficulty = 'easy' | 'medium' | 'hard'
+
 export interface Player {
   color: PlayerColor
   position: Position
   score: number
 }
-
-export type PlayerColor = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange'
-export type GameMode = 'pvp' | 'ai'
-export type AIDifficulty = 'easy' | 'medium' | 'hard'
-export type AIStyle = 'aggressive' | 'defensive' | 'balanced'
 
 export interface Move {
   player: 1 | 2
@@ -28,25 +27,10 @@ export interface GameState {
   player2: Player
   gameMode: GameMode
   aiDifficulty: AIDifficulty
-  aiStyle: AIStyle
   moveHistory: Move[]
   isGameOver: boolean
   showTutorial: boolean
-}
-
-export interface Position {
-  row: number
-  col: number
-}
-
-export type PlayerColor = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange'
-export type GameMode = 'pvp' | 'ai'
-export type AIDifficulty = 'easy' | 'medium' | 'hard'
-
-export interface Player {
-  color: PlayerColor
-  position: Position
-  score: number
+  isAIThinking: boolean
 }
 
 export interface Move {
