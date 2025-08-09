@@ -221,20 +221,30 @@ export const GameBoard = () => {
 
     switch (turnPhase) {
       case TurnPhase.SELECT_PIECE:
-        // Can only select current player's piece
+        // Allow clicking on current player's piece OR any valid move position
         if (row === currentPlayer.position.row && col === currentPlayer.position.col) {
           setSelectedPosition(clickedPosition)
           setTurnPhase(TurnPhase.SELECT_MOVE)
+        } else if (checkValidMove(clickedPosition, currentPlayer.position, game.board)) {
+          // Skip piece selection and directly move to the clicked position
+          dispatch(
+            makeMove({
+              to: clickedPosition,
+              removedSquare: null
+            })
+          )
+          setMoveToPosition(clickedPosition)
+          setTurnPhase(TurnPhase.SELECT_REMOVE)
         }
         break
 
       case TurnPhase.SELECT_MOVE:
         if (checkValidMove(clickedPosition, currentPlayer.position, game.board)) {
-          // First move the piece
+          // Move the piece
           dispatch(
             makeMove({
               to: clickedPosition,
-              removedSquare: null // We'll update this in the remove phase
+              removedSquare: null
             })
           )
           setMoveToPosition(clickedPosition)
@@ -413,8 +423,11 @@ export const GameBoard = () => {
           row.map((cell: boolean | null, j: number) => {
             const currentPlayer = game.currentPlayer === 1 ? game.player1 : game.player2
             const pos = { row: i, col: j }
-            const isValidMove = turnPhase === TurnPhase.SELECT_MOVE && 
-              selectedPosition && checkValidMove(pos, currentPlayer.position, game.board)
+            
+            // Show valid moves when no piece is selected (in SELECT_PIECE phase) or when piece is selected
+            const isValidMove = (turnPhase === TurnPhase.SELECT_PIECE || turnPhase === TurnPhase.SELECT_MOVE) && 
+              checkValidMove(pos, currentPlayer.position, game.board)
+            
             const canBeRemoved = turnPhase === TurnPhase.SELECT_REMOVE && 
               moveToPosition && canRemoveSquare(pos, game.board, currentPlayer.position, moveToPosition)
 
