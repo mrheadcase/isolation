@@ -33,6 +33,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Fix MIME types
+        run: |
+          find ./dist -name "*.js" -exec file {} \;
+          echo "Listing JS files:"
+          find ./dist -name "*.js" -ls
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
