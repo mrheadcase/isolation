@@ -27,15 +27,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Fix file extensions
-        run: |
-          find dist -name "*.js" -exec file {} \; | grep -v "JavaScript" | cut -d: -f1 | xargs -I {} mv {} {}.bak
-          find dist -name "*.js.bak" -exec sh -c 'mv "$1" "${1%.bak}"' _ {} \;
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
-          cname: false
