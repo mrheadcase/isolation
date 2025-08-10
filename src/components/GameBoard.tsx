@@ -229,6 +229,7 @@ export const GameBoard = () => {
   const [selectedPosition, setSelectedPosition] = useState<Position | null>(null)
   const [moveToPosition, setMoveToPosition] = useState<Position | null>(null)
   const [turnPhase, setTurnPhase] = useState<TurnPhase>(TurnPhase.SELECT_PIECE)
+  const [showVictoryModal, setShowVictoryModal] = useState(false)
 
   const handleCellClick = (row: number, col: number) => {
     if (game.isGameOver) return
@@ -361,15 +362,25 @@ export const GameBoard = () => {
 
   // Handle AI turns separately
   React.useEffect(() => {
-    if (game.isGameOver) return;
+    // Prevent AI from moving if game is over or during victory modal
+    if (game.isGameOver || showVictoryModal) return;
     if (game.gameMode !== 'ai' || game.currentPlayer !== 2) return;
 
     // Handle AI turn
     const handleAIMove = async () => {
+      // Double-check game state hasn't changed during async operations
+      if (game.isGameOver || showVictoryModal) return;
+      
       dispatch(setAIThinking(true));
       
       // Wait before AI moves
       await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Check again after delay to prevent moves after game ends
+      if (game.isGameOver || showVictoryModal) {
+        dispatch(setAIThinking(false));
+        return;
+      }
       
       // Calculate and execute AI move
       const aiMove = selectAIMove(
@@ -385,6 +396,12 @@ export const GameBoard = () => {
       
       // Wait before removing square
       await new Promise(resolve => setTimeout(resolve, 400));
+      
+      // Final check before square removal
+      if (game.isGameOver || showVictoryModal) {
+        dispatch(setAIThinking(false));
+        return;
+      }
       
       // Calculate and execute square removal
       const squareToRemove = selectAIRemoval(
@@ -402,9 +419,7 @@ export const GameBoard = () => {
     };
 
     handleAIMove();
-  }, [game.currentPlayer, game.board, game.gameMode, game.isGameOver, dispatch]);
-
-  const [showVictoryModal, setShowVictoryModal] = useState(false)
+  }, [game.currentPlayer, game.board, game.gameMode, game.isGameOver, showVictoryModal, dispatch]);
 
   // Show victory modal when game ends
   React.useEffect(() => {
@@ -448,9 +463,9 @@ export const GameBoard = () => {
 
       {/* Victory Modal */}
       <AnimatePresence>
-        {showVictoryModal && (
+        {showVictoryModal && game.winner && (
           <VictoryModal
-            winner={game.currentPlayer === 1 ? 2 : 1}
+            winner={game.winner}
             onClose={() => setShowVictoryModal(false)}
           />
         )}

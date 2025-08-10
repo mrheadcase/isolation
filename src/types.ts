@@ -29,6 +29,7 @@ export interface GameState {
   aiDifficulty: AIDifficulty
   moveHistory: Move[]
   isGameOver: boolean
+  winner: 1 | 2 | null
   showTutorial: boolean
   isAIThinking: boolean
   tutorialMode: boolean

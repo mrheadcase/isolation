@@ -18,6 +18,7 @@ const initialState: GameState = {
   aiDifficulty: 'medium',
   moveHistory: [],
   isGameOver: false,
+  winner: null,
   showTutorial: true,
   isAIThinking: false,
   tutorialMode: false,
@@ -90,6 +91,7 @@ export const gameSlice = createSlice({
     },
     endGame: (state, action: PayloadAction<1 | 2>) => {
       state.isGameOver = true
+      state.winner = action.payload
       if (action.payload === 1) {
         state.player1.score++
       } else {
@@ -103,6 +105,7 @@ export const gameSlice = createSlice({
       state.currentPlayer = 1
       state.moveHistory = []
       state.isGameOver = false
+      state.winner = null
     },
     toggleTutorial: (state) => {
       state.showTutorial = !state.showTutorial
