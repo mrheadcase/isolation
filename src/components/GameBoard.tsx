@@ -4,7 +4,7 @@ import type { AppDispatch } from '../store'
 import styled, { DefaultTheme } from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { RootState, GameMode, AIDifficulty } from '../types'
-import { makeMove, undoMove, endGame } from '../store/gameSlice'
+import { makeMove, undoMove, endGame, setAIThinking } from '../store/gameSlice'
 import { VictoryModal } from './VictoryModal'
 import { selectAIMove, selectAIRemoval } from '../ai/gameAI'
 import '../index.css'
@@ -134,42 +134,40 @@ const RemoveX = styled.div<{ theme: DefaultTheme }>`
   pointer-events: none;
 `
 
-const PlayerPiece = styled.div<{ color: string; theme: DefaultTheme }>`
+const PlayerPiece = styled(motion.div)<{ color: string; theme: DefaultTheme }>`
   position: absolute;
   width: 80%;
   height: 80%;
   border-radius: 50%;
   background-color: ${props => props.color};
-  transition: all 0.2s ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
 `
 
 const CellContainer = styled(motion.div)<CellProps & { theme: DefaultTheme }>`
   aspect-ratio: 1;
   position: relative;
-  background-color: ${props =>
-    props.isStartingSquare
-      ? '#FFD700 !important' // Solid gold color for starting squares with !important to override hover states
-      : props.isActive
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'rgba(0, 0, 0, 0.3)'};
+  background-color: ${props => {
+    // Starting squares with special handling for valid moves
+    if (props.isStartingSquare) {
+      return props.isValid ? '#FFE55C' : '#FFD700'; // Lighter gold when valid move
+    }
+    // Regular squares
+    return props.isActive ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.3)';
+  }};
   border-radius: 4px;
   cursor: ${props => (props.isActive ? 'pointer' : 'not-allowed')};
-  border: 2px solid ${props =>
-    props.isStartingSquare
-      ? '#DAA520 !important' // Darker gold border with !important
-      : props.isSelected
+  border: 2px solid ${props => {
+    if (props.isStartingSquare) {
+      return props.isValid ? '#FFB347' : '#DAA520'; // Orange border when valid move on starting square
+    }
+    return props.isSelected
       ? props.theme.primaryColor
       : props.isValid
       ? 'rgba(255, 255, 255, 0.5)'
-      : 'transparent'};
-  &:hover {
-    background-color: ${props =>
-      props.isStartingSquare
-        ? '#FFD700 !important'
-        : props.isActive
-        ? 'rgba(255, 255, 255, 0.1)'
-        : 'rgba(0, 0, 0, 0.3)'};
-  }
+      : 'transparent';
+  }};
   transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
@@ -177,8 +175,16 @@ const CellContainer = styled(motion.div)<CellProps & { theme: DefaultTheme }>`
 
   &:hover {
     transform: ${props => (props.isActive ? 'scale(0.95)' : 'none')};
-    background-color: ${props =>
-      props.isValid ? 'rgba(255, 255, 255, 0.2)' : props.isActive ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.3)'};
+    background-color: ${props => {
+      if (props.isStartingSquare) {
+        return props.isValid ? '#FFEB3B' : '#FFD700'; // Brighter gold on hover when valid
+      }
+      return props.isValid 
+        ? 'rgba(255, 255, 255, 0.2)' 
+        : props.isActive 
+        ? 'rgba(255, 255, 255, 0.15)' 
+        : 'rgba(0, 0, 0, 0.3)';
+    }};
   }
 `
 
@@ -199,8 +205,38 @@ const Cell: React.FC<CellComponentProps> = (props) => {
   
   return (
     <CellContainer {...props}>
-      {props.isPlayer1 && <PlayerPiece color={game.player1.color} />}
-      {props.isPlayer2 && <PlayerPiece color={game.player2.color} />}
+      {props.isPlayer1 && (
+        <PlayerPiece 
+          key="player1-piece"
+          color={game.player1.color}
+          initial={false}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 25,
+            duration: 0.3
+          }}
+          layout
+          layoutId="player1-piece"
+        />
+      )}
+      {props.isPlayer2 && (
+        <PlayerPiece 
+          key="player2-piece"
+          color={game.player2.color}
+          initial={false}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 25,
+            duration: 0.3
+          }}
+          layout
+          layoutId="player2-piece"
+        />
+      )}
       {props.canBeRemoved && <RemoveX>×</RemoveX>}
     </CellContainer>
   )
@@ -318,8 +354,9 @@ export const GameBoard = () => {
         // Skip the current position
         if (row === playerPosition.row && col === playerPosition.col) continue;
         
-        // If there's a valid move available, return true
-        if (game.board[row][col] === true) {
+        // Check if this would be a valid move using the same logic as checkValidMove
+        const targetPos = { row, col };
+        if (checkValidMove(targetPos, playerPosition, game.board)) {
           return true;
         }
       }
@@ -327,7 +364,7 @@ export const GameBoard = () => {
     return false;
   }
 
-  // Check for game over after each move completion
+  // Check for game over after each completed turn (both PvP and AI)
   React.useEffect(() => {
     if (game.isGameOver) return;
 
@@ -339,44 +376,52 @@ export const GameBoard = () => {
       dispatch(endGame(winner));
       return;
     }
+  }, [game.currentPlayer, game.board, game.isGameOver, dispatch]);
+
+  // Handle AI turns separately
+  React.useEffect(() => {
+    if (game.isGameOver) return;
+    if (game.gameMode !== 'ai' || game.currentPlayer !== 2) return;
 
     // Handle AI turn
     const handleAIMove = async () => {
-      if (game.gameMode === 'ai' && game.currentPlayer === 2) {
-        // Wait before AI moves
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Calculate and execute AI move
-        const aiMove = selectAIMove(
-          game.player2.position,
-          game.player1.position,
-          game.board
-        );
-        
-        dispatch(makeMove({
-          to: aiMove,
-          removedSquare: null
-        }));
-        
-        // Wait before removing square
-        await new Promise(resolve => setTimeout(resolve, 400));
-        
-        // Calculate and execute square removal
-        const squareToRemove = selectAIRemoval(
-          aiMove,
-          game.player1.position,
-          game.board
-        );
-        
-        dispatch(makeMove({
-          to: aiMove,
-          removedSquare: squareToRemove
-        }));
-      }
+      dispatch(setAIThinking(true));
+      
+      // Wait before AI moves
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Calculate and execute AI move
+      const aiMove = selectAIMove(
+        game.player2.position,
+        game.player1.position,
+        game.board
+      );
+      
+      dispatch(makeMove({
+        to: aiMove,
+        removedSquare: null
+      }));
+      
+      // Wait before removing square
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      // Calculate and execute square removal
+      const squareToRemove = selectAIRemoval(
+        aiMove,
+        game.player1.position,
+        game.board
+      );
+      
+      dispatch(makeMove({
+        to: aiMove,
+        removedSquare: squareToRemove
+      }));
+      
+      dispatch(setAIThinking(false));
     };
 
     handleAIMove();
-  }, [game.currentPlayer, game.board, game.gameMode]);
+  }, [game.currentPlayer, game.board, game.gameMode, game.isGameOver, dispatch]);
 
   const [showVictoryModal, setShowVictoryModal] = useState(false)
 
