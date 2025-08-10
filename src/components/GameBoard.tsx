@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { AppDispatch } from '../store'
 import styled, { DefaultTheme } from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { RootState, GameMode, AIDifficulty } from '../types'
-import { makeMove, undoMove, endGame, setAIThinking } from '../store/gameSlice'
+import type { RootState, GameMode, AIDifficulty, GameState } from '../types'
+import { makeMove, undoMove, endGame, setAIThinking, setTutorialMode, setShowRulesModal } from '../store/gameSlice'
 import { VictoryModal } from './VictoryModal'
+import { SimpleTutorial } from './SimpleTutorial'
+import { RulesModal } from './RulesModal'
 import { selectAIMove, selectAIRemoval } from '../ai/gameAI'
 import '../index.css'
 
@@ -29,21 +31,6 @@ export interface Player {
   color: PlayerColor;
   position: Position;
   score: number;
-}
-
-export interface GameState {
-  board: (boolean | null)[][];
-  currentPlayer: 1 | 2;
-  player1: Player;
-  player2: Player;
-  isGameOver: boolean;
-  moveHistory: Array<{
-    to: Position;
-    removedSquare: Position | null;
-  }>;
-  gameMode: GameMode;
-  aiDifficulty: AIDifficulty;
-  isAIThinking: boolean;
 }
 
 interface CellProps {
@@ -78,12 +65,6 @@ const Board = styled.div<{ theme: DefaultTheme }>`
   border-radius: 8px;
   width: min(80vh, 80vw);
   height: min(80vh, 80vw);
-`
-
-const Controls = styled.div<{ theme: DefaultTheme }>`
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
 `
 
 const ScoreBoard = styled.div<{ theme: DefaultTheme }>`
@@ -445,6 +426,8 @@ export const GameBoard = () => {
         <GameStatus>
           {game.isGameOver
             ? `Game Over! ${game.currentPlayer === 1 ? 'Player 2' : 'Player 1'} Wins!`
+            : game.tutorialMode
+            ? 'Tutorial Mode - Follow the Guide'
             : `${game.currentPlayer === 1 ? 'Player 1' : 'Player 2'}'s Turn`}
         </GameStatus>
         <PlayerScore
@@ -455,6 +438,15 @@ export const GameBoard = () => {
           <div className="label">Player 2</div>
         </PlayerScore>
       </ScoreBoard>
+
+      {/* Tutorial Mode Overlay */}
+      <SimpleTutorial
+        isActive={game.tutorialMode}
+        onComplete={() => dispatch(setTutorialMode(false))}
+        onSkip={() => dispatch(setTutorialMode(false))}
+      />
+
+      {/* Victory Modal */}
       <AnimatePresence>
         {showVictoryModal && (
           <VictoryModal
@@ -463,6 +455,17 @@ export const GameBoard = () => {
           />
         )}
       </AnimatePresence>
+
+      {/* Rules Modal */}
+      <RulesModal
+        isOpen={game.showRulesModal}
+        onClose={() => dispatch(setShowRulesModal(false))}
+        onStartTutorial={() => {
+          dispatch(setTutorialMode(true))
+          dispatch(setShowRulesModal(false))
+        }}
+      />
+
       <Board>
         {game.board.map((row: (boolean | null)[], i: number) =>
           row.map((cell: boolean | null, j: number) => {
@@ -500,11 +503,6 @@ export const GameBoard = () => {
           })
         )}
       </Board>
-      <Controls>
-        <button onClick={handleUndo} disabled={game.moveHistory.length === 0}>
-          Undo Move
-        </button>
-      </Controls>
     </BoardContainer>
   );
 }

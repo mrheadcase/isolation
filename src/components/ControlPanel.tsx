@@ -5,7 +5,9 @@ import {
   setPlayerColor,
   setAIDifficulty,
   resetGame,
-  toggleTutorial
+  undoMove,
+  setTutorialMode,
+  setShowRulesModal
 } from '../store/gameSlice'
 import { toggleTheme } from '../store/themeSlice'
 import type { PlayerColor, AIDifficulty, GameState, RootState, ThemeState } from '../types'
@@ -161,10 +163,29 @@ export const ControlPanel = () => {
         <Title>Game Options</Title>
         <ButtonGroup>
           <button onClick={() => dispatch(resetGame())}>New Game</button>
+          <button 
+            onClick={() => dispatch(undoMove())}
+            disabled={game.moveHistory.length === 0 || game.tutorialMode}
+          >
+            Undo Move
+          </button>
           <button onClick={() => dispatch(toggleTheme())}>
             {theme.isDarkMode ? 'Light Mode' : 'Dark Mode'}
           </button>
-          <button onClick={() => dispatch(toggleTutorial())}>Show Tutorial</button>
+        </ButtonGroup>
+        <ButtonGroup>
+          <button 
+            onClick={() => dispatch(setShowRulesModal(true))}
+            disabled={game.tutorialMode}
+          >
+            Rules & Guide
+          </button>
+          <button 
+            onClick={() => dispatch(setTutorialMode(true))}
+            disabled={game.tutorialMode}
+          >
+            Start Tutorial
+          </button>
         </ButtonGroup>
       </Section>
     </Panel>

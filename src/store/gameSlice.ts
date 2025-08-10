@@ -19,7 +19,9 @@ const initialState: GameState = {
   moveHistory: [],
   isGameOver: false,
   showTutorial: true,
-  isAIThinking: false
+  isAIThinking: false,
+  tutorialMode: false,
+  showRulesModal: false
 }
 
 export const gameSlice = createSlice({
@@ -107,6 +109,12 @@ export const gameSlice = createSlice({
     },
     setAIThinking: (state, action: PayloadAction<boolean>) => {
       state.isAIThinking = action.payload
+    },
+    setTutorialMode: (state, action: PayloadAction<boolean>) => {
+      state.tutorialMode = action.payload
+    },
+    setShowRulesModal: (state, action: PayloadAction<boolean>) => {
+      state.showRulesModal = action.payload
     }
   }
 })
@@ -120,7 +128,9 @@ export const {
   endGame,
   resetGame,
   toggleTutorial,
-  setAIThinking
+  setAIThinking,
+  setTutorialMode,
+  setShowRulesModal
 } = gameSlice.actions
 
 export default gameSlice.reducer

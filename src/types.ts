@@ -31,6 +31,8 @@ export interface GameState {
   isGameOver: boolean
   showTutorial: boolean
   isAIThinking: boolean
+  tutorialMode: boolean
+  showRulesModal: boolean
 }
 
 export interface Theme {

@@ -1,38 +1,54 @@
 # Isolation Game
 
-A modern web implementation of the classic 1970s game Isolation, built with React, TypeScript, and Redux. **Now live at: https://mrheadcase.github.io/isolation/**
+A modern, polished web implementation of the classic 1970s board game Isolation, featuring smooth animations, comprehensive tutorials, and an intuitive user interface. **Play now at: https://mrheadcase.github.io/isolation/**
 
-## Current Status ✅
+## 🎮 Game Features
 
-This project is **fully functional** and successfully deployed to GitHub Pages. Key achievements:
+### **Enhanced Gameplay Experience**
+- ✅ **Streamlined Controls**: Click directly on highlighted squares to move - no piece selection required
+- ✅ **Smooth Animations**: Fluid piece movement with spring physics using Framer Motion
+- ✅ **Smart Win Detection**: Automatic game-over detection when players have no valid moves
+- ✅ **Visual Feedback**: Clear highlighting for valid moves and removable squares
+- ✅ **Golden Starting Squares**: Permanent, unremovable starting positions
 
-- ✅ Complete game implementation with turn-based gameplay
-- ✅ Enhanced UX: Direct move selection (no need to click piece first)
-- ✅ TypeScript compilation with zero errors
-- ✅ GitHub Pages deployment with MIME type compatibility fixes
-- ✅ Cross-browser compatibility via Vite legacy plugin
-- ✅ Responsive design with styled-components theming
+### **Game Modes & AI**
+- ✅ **Player vs Player**: Local multiplayer on the same device
+- ✅ **Player vs AI**: Multiple difficulty levels with strategic AI opponents
+- ✅ **Undo System**: Take back moves with intelligent state management
 
-## Features
+### **Learning & Tutorial System**
+- ✅ **Interactive Tutorial**: Step-by-step introduction for new players
+- ✅ **Comprehensive Rules Guide**: Three-tab modal with complete game rules, strategy tips, and UI controls
+- ✅ **Visual Examples**: Board diagrams showing game mechanics
+- ✅ **Strategy Tips**: Advanced tactics and common mistake guidance
 
-- **Enhanced Gameplay**: Click directly on valid moves without selecting pieces first
-- Player vs Player mode (AI features planned for future)
-- Customizable piece colors with theme support
-- Dark/Light theme toggle
-- Smooth animations for piece movement and square removal
-- Session-based game state management
-- Built-in game rules and win/lose detection
+### **Customization & Themes**
+- ✅ **Player Colors**: Choose from 6 vibrant colors (red, blue, green, yellow, purple, orange)
+- ✅ **Dark/Light Themes**: Toggle between theme modes
+- ✅ **Responsive Design**: Optimized for desktop and mobile devices
+- ✅ **Organized Controls**: All game options centralized in an intuitive control panel
 
-## Tech Stack
+## 🛠 Technical Implementation
 
-- **Frontend**: React 18 with TypeScript
-- **State Management**: Redux Toolkit
-- **Styling**: Styled Components with theme system
-- **Animations**: Framer Motion
-- **Build Tool**: Vite with legacy browser support
-- **Deployment**: GitHub Actions → GitHub Pages
+### **Modern React Architecture**
+- **React 18** with TypeScript for type-safe development
+- **Redux Toolkit** for predictable state management
+- **Styled Components** with comprehensive theming system
+- **Framer Motion** for smooth animations and transitions
 
-## Quick Start
+### **Advanced Features**
+- **State Persistence**: Game state maintained across browser sessions
+- **Animation System**: Layout animations for piece movement with spring physics
+- **Type Safety**: Comprehensive TypeScript definitions throughout
+- **Component Architecture**: Modular, reusable React components
+
+### **Deployment & Performance**
+- **Vite Build System**: Fast development and optimized production builds
+- **GitHub Actions CI/CD**: Automated testing and deployment pipeline
+- **GitHub Pages Hosting**: Reliable, fast global content delivery
+- **Cross-Browser Compatibility**: ES2015+ with legacy fallbacks
+
+## 🚀 Quick Start
 
 ```bash
 # Clone and setup
@@ -40,116 +56,149 @@ git clone https://github.com/mrheadcase/isolation.git
 cd isolation
 npm install
 
-# Development
-npm run dev
+# Development server
+npm run dev          # Starts at http://localhost:3000/isolation/
 
-# Build for production
-npm run build
+# Production build
+npm run build        # Builds to dist/
+
+# Preview production build
+npm run preview      # Preview the built application
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
-├── components/          # React components
-│   ├── GameBoard.tsx   # Main game interface
-│   └── ControlPanel.tsx # Theme and game controls
-├── store/              # Redux store and slices
-│   ├── gameSlice.ts    # Game state management
-│   └── themeSlice.ts   # Theme state management
-├── types/              # TypeScript definitions
-├── styles/             # Global styles and themes
-└── main.tsx           # Application entry point
+├── components/              # React Components
+│   ├── GameBoard.tsx       # Main game interface with animations
+│   ├── ControlPanel.tsx    # Game options and theme controls
+│   ├── VictoryModal.tsx    # Win/lose celebration modal
+│   ├── SimpleTutorial.tsx  # Welcome tutorial overlay
+│   ├── RulesModal.tsx      # Comprehensive rules guide
+│   └── Tutorial.tsx        # Legacy tutorial component
+├── store/                  # Redux State Management
+│   ├── gameSlice.ts       # Game state, moves, and logic
+│   ├── themeSlice.ts      # Theme and UI preferences
+│   └── index.ts           # Store configuration
+├── ai/                    # AI Implementation
+│   └── gameAI.ts         # Strategic AI with difficulty levels
+├── types/                 # TypeScript Definitions
+│   └── index.ts          # Game types and interfaces
+├── styles/               # Global Styles
+└── main.tsx             # Application entry point
 
-public/                 # Static assets and deployment configs
-├── .htaccess          # Apache MIME type configuration
-├── web.config         # IIS MIME type configuration
-├── .nojekyll          # GitHub Pages Jekyll bypass
-└── _headers           # Netlify-style headers
-
-.github/workflows/      # GitHub Actions deployment
-└── deploy.yml         # Automated build and deploy
+.github/workflows/       # CI/CD Pipeline
+└── deploy.yml          # Automated GitHub Pages deployment
 ```
 
-## Game Rules
+## 🎯 How to Play
 
-1. The game is played on a 7x7 grid
-2. Two players take turns moving their pieces
-3. Players can move one square in any direction (like a king in chess)
-4. After moving, the player must remove one square from the board
-5. Players cannot move to or remove:
-   - A square that's already removed
-   - A square occupied by either player
-   - The starting positions
-6. The game ends when a player cannot make a valid move
-7. The player who cannot move loses
+### **Basic Rules**
+1. **Objective**: Be the last player who can make a move
+2. **Movement**: Click any highlighted square adjacent to your piece to move there
+3. **Removal**: After moving, click any square marked with × to remove it
+4. **Restrictions**: Cannot move to or remove occupied squares, removed squares, or golden starting positions
+5. **Victory**: Win when your opponent has no legal moves
 
-## Setup Prompt for AI Assistant
+### **Strategy Tips**
+- **Control the Center**: Maintain mobility by staying near the board center
+- **Create Barriers**: Use removed squares to channel your opponent toward edges
+- **Preserve Options**: Always keep multiple escape routes open
+- **Plan Ahead**: Think several moves ahead to set up winning positions
 
-If you need to recreate this project or continue development, use this comprehensive prompt:
+## 🎨 UI Components
 
-```
-Create a fully functional browser-based Isolation game with the following specifications:
+### **Game Board**
+- **Interactive Grid**: 7×7 responsive game board with visual feedback
+- **Piece Animation**: Smooth movement with spring physics
+- **Highlighting System**: Clear visual indicators for valid moves
+- **Turn Indicators**: Active player highlighting and status display
 
-CORE GAME IMPLEMENTATION:
-- 7x7 grid board with turn-based gameplay between two players
-- Players move one square in any direction (king-like movement)
-- After moving, player must remove one square from the board
-- Game ends when a player cannot make a valid move
-- Enhanced UX: Allow players to click directly on valid moves without selecting their piece first
-- Visual feedback for valid moves and game state
+### **Control Panel**
+- **Game Modes**: Switch between PvP and AI modes
+- **AI Difficulty**: Easy, Medium, and Hard AI opponents
+- **Player Customization**: Choose colors for both players
+- **Game Actions**: New game, undo moves, tutorial access
+- **Theme Toggle**: Switch between dark and light modes
 
-TECHNICAL STACK:
-- React 18 with TypeScript (strict type checking)
-- Redux Toolkit for state management (gameSlice, themeSlice)
-- Styled Components with comprehensive theming system
-- Framer Motion for smooth animations
-- Vite build system with ES2015 target
+### **Tutorial System**
+- **Welcome Modal**: Quick introduction for new players
+- **Rules Guide**: Comprehensive three-tab reference
+  - **Game Rules**: Complete rules with visual examples
+  - **Strategy Guide**: Advanced tactics and tips
+  - **Controls & UI**: Interface and control explanations
 
-DEPLOYMENT REQUIREMENTS:
-- GitHub Actions workflow for automated deployment
-- GitHub Pages compatibility with MIME type fixes
-- Vite legacy plugin for cross-browser compatibility
-- Multiple server configuration files (.htaccess, web.config, .nojekyll)
+## 🔧 Development
 
-PROJECT STRUCTURE:
-- Modular component architecture (GameBoard, ControlPanel)
-- Centralized type definitions in types/index.ts
-- Theme system with dark/light modes
-- Redux store with proper TypeScript integration
-
-CRITICAL DEPLOYMENT FIXES:
-- Use @vitejs/plugin-legacy for ES module fallbacks
-- Include comprehensive MIME type configurations
-- GitHub Actions with official pages deployment action
-- Proper base path configuration for GitHub Pages subdirectory
-
-The result should be a fully playable game deployed to GitHub Pages with zero TypeScript errors and cross-browser compatibility.
+### **Available Scripts**
+```bash
+npm run dev       # Development server with hot reload
+npm run build     # Production build with optimization
+npm run preview   # Preview production build locally
+npm run typecheck # TypeScript type checking
 ```
 
-## Development History
+### **Key Technologies**
+- **React 18.3+**: Latest React with concurrent features
+- **TypeScript 5.9+**: Strict type checking for reliability
+- **Redux Toolkit 2.8+**: Modern Redux with RTK Query
+- **Styled Components 6.1+**: CSS-in-JS with theming
+- **Framer Motion 12.23+**: Advanced animations and gestures
+- **Vite 7.0+**: Next-generation frontend tooling
 
-### Key Milestones
-1. **Initial Setup**: React + TypeScript + Redux Toolkit foundation
-2. **Game Logic**: Core Isolation game mechanics implementation  
-3. **UX Enhancement**: Direct move selection gameplay improvement
-4. **TypeScript Fixes**: Resolved all compilation errors and type issues
-5. **Deployment Challenges**: Overcame GitHub Pages MIME type issues
-6. **Cross-Browser Support**: Added legacy plugin for broad compatibility
+## 🚀 Deployment
 
-### Technical Challenges Solved
-- **MIME Type Issues**: GitHub Pages serving JS files as `application/octet-stream`
-- **ES Module Compatibility**: Legacy fallbacks for older browsers/servers
-- **TypeScript Strictness**: Proper type definitions and Redux integration
-- **GitHub Actions**: Automated build and deployment pipeline
+The project automatically deploys to GitHub Pages via GitHub Actions:
 
-## Deployment Architecture
+1. **Automated Build**: Triggers on every push to main branch
+2. **Type Checking**: Ensures TypeScript compilation passes
+3. **Production Build**: Optimizes bundle size and performance
+4. **GitHub Pages**: Deploys to `https://mrheadcase.github.io/isolation/`
 
-The project uses a robust deployment strategy:
+### **Deployment Features**
+- **Zero-Downtime Deployment**: Atomic deployments with rollback capability
+- **Optimized Assets**: Minified and compressed for fast loading
+- **Cache Management**: Proper cache headers for optimal performance
+- **Error Handling**: Comprehensive build error reporting
 
-1. **GitHub Actions**: Automated build on every push to main
-2. **Vite Legacy Plugin**: Generates both modern and legacy bundles
-3. **MIME Type Fixes**: Multiple configuration files for different servers
-4. **Official GitHub Pages Action**: Uses `actions/deploy-pages@v4` for reliability
+## 📈 Recent Updates
+
+### **v2.0 - Enhanced Tutorial & UX (Latest)**
+- ✅ **Reorganized Controls**: Moved all game actions to organized control panel
+- ✅ **Tutorial System**: Added comprehensive welcome tutorial and rules guide
+- ✅ **Updated Documentation**: Accurate rules reflecting current gameplay
+- ✅ **Visual Improvements**: Cleaner example boards and simplified UI
+- ✅ **Better Navigation**: Integrated tutorial and rules access in game options
+
+### **v1.5 - Animation & Polish**
+- ✅ **Smooth Animations**: Added Framer Motion for piece movement
+- ✅ **Enhanced Visuals**: Improved starting square styling and feedback
+- ✅ **Win Detection**: Fixed comprehensive win condition checking
+- ✅ **AI Improvements**: Better AI move calculation and timing
+
+### **v1.0 - Core Implementation**
+- ✅ **Complete Game Logic**: Full Isolation game implementation
+- ✅ **Streamlined UX**: Direct move selection without piece clicking
+- ✅ **State Management**: Redux Toolkit integration
+- ✅ **Deployment**: Successful GitHub Pages deployment
+
+## 🤝 Contributing
+
+This project demonstrates modern React development practices and is open for contributions:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Built with ❤️ using React, TypeScript, and modern web technologies**
 
 ````
