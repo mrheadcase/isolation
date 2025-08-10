@@ -30,7 +30,6 @@
   "private": "true",
   "type": "module",
   "devDependencies": {
-    "@vitejs/plugin-legacy": "^7.2.1",
     "terser": "^5.43.1"
   }
 }
