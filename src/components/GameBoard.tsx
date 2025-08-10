@@ -330,7 +330,7 @@ export const GameBoard = () => {
     return rowDiff <= 1 && colDiff <= 1 && (rowDiff !== 0 || colDiff !== 0)
   }
 
-  const canRemoveSquare = (pos: Position, board: (boolean | null)[][], _: Position, newPos: Position) => {
+  const canRemoveSquare = (pos: Position, board: (boolean | null)[][], _currentPos: Position, newPos: Position) => {
     // Can't remove:
     // - null squares
     // - other player's position (which is still at currentPos)
