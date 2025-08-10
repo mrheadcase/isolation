@@ -140,10 +140,10 @@ npm run typecheck # TypeScript type checking
 ```
 
 ### **Key Technologies**
-- **React 18.3+**: Latest React with concurrent features
+- **React 19.1+**: Latest React with concurrent features
 - **TypeScript 5.9+**: Strict type checking for reliability
-- **Redux Toolkit 2.8+**: Modern Redux with RTK Query
-- **Styled Components 6.1+**: CSS-in-JS with theming
+- **Redux Toolkit 2.8+**: Modern Redux state management
+- **Styled Components 6.1+**: CSS-in-JS with comprehensive theming
 - **Framer Motion 12.23+**: Advanced animations and gestures
 - **Vite 7.0+**: Next-generation frontend tooling
 
@@ -164,7 +164,14 @@ The project automatically deploys to GitHub Pages via GitHub Actions:
 
 ## 📈 Recent Updates
 
-### **v2.0 - Enhanced Tutorial & UX (Latest)**
+### **v2.1 - Polish & UX Refinements (Latest)**
+- ✅ **Victory Modal Bug Fix**: Fixed AI mode winner display flickering issue
+- ✅ **ESC Key Support**: Added keyboard navigation to close modals (Rules & Tutorial)
+- ✅ **Scroll-to-Top**: Rules modal tabs now automatically scroll to section top
+- ✅ **Hidden Scrollbar**: Clean, minimal scrollbar styling in Rules modal
+- ✅ **Enhanced State Management**: Added winner field to prevent modal display bugs
+
+### **v2.0 - Enhanced Tutorial & UX**
 - ✅ **Reorganized Controls**: Moved all game actions to organized control panel
 - ✅ **Tutorial System**: Added comprehensive welcome tutorial and rules guide
 - ✅ **Updated Documentation**: Accurate rules reflecting current gameplay
