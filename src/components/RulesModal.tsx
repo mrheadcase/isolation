@@ -25,6 +25,15 @@ const Content = styled(motion.div)`
   overflow-y: auto;
   color: ${props => props.theme.textColor};
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Hide scrollbar but maintain scroll functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+
+  /* Webkit scrollbar hiding */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `
 
 const Header = styled.div`
