@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -69,6 +69,23 @@ interface SimpleTutorialProps {
 }
 
 export const SimpleTutorial: React.FC<SimpleTutorialProps> = ({ isActive, onComplete, onSkip }) => {
+  // Add ESC key support
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isActive) {
+        onSkip()
+      }
+    }
+
+    if (isActive) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isActive, onSkip])
+
   if (!isActive) return null
 
   return (
