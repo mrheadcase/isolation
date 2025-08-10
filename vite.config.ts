@@ -5,11 +5,17 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/isolation/',
+  optimizeDeps: {
+    exclude: ['@vitejs/plugin-legacy']
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    target: 'es2015'
+    target: 'esnext',
+    rollupOptions: {
+      external: ['@vitejs/plugin-legacy']
+    }
   },
   server: {
     port: 3000,
