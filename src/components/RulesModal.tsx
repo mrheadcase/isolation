@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -221,6 +221,16 @@ interface RulesModalProps {
 
 export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose, onStartTutorial }) => {
   const [activeTab, setActiveTab] = useState<'rules' | 'strategy' | 'controls'>('rules')
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  // Function to handle tab changes with scroll reset
+  const handleTabChange = (tab: 'rules' | 'strategy' | 'controls') => {
+    setActiveTab(tab)
+    // Scroll to top of the content when tab changes
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0
+    }
+  }
 
   // Add ESC key support
   useEffect(() => {
@@ -447,6 +457,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose, onStart
           onClick={onClose}
         >
           <Content
+            ref={contentRef}
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -457,19 +468,19 @@ export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose, onStart
               <TabContainer>
                 <Tab 
                   active={activeTab === 'rules'} 
-                  onClick={() => setActiveTab('rules')}
+                  onClick={() => handleTabChange('rules')}
                 >
                   Game Rules
                 </Tab>
                 <Tab 
                   active={activeTab === 'strategy'} 
-                  onClick={() => setActiveTab('strategy')}
+                  onClick={() => handleTabChange('strategy')}
                 >
                   Strategy Guide
                 </Tab>
                 <Tab 
                   active={activeTab === 'controls'} 
-                  onClick={() => setActiveTab('controls')}
+                  onClick={() => handleTabChange('controls')}
                 >
                   Controls & UI
                 </Tab>
