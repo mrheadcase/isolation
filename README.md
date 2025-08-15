@@ -1,52 +1,58 @@
 # Isolation Game
 
-A modern, polished web implementation of the classic 1970s board game Isolation, featuring smooth animations, comprehensive tutorials, and an intuitive user interface. **Play now at: https://mrheadcase.github.io/isolation/**
+A modern, polished web implementation of the classic 1970s board game Isolation, featuring smooth animations, comprehensive tutorials, multiple board sizes, and an intuitive user interface. **Play now at: https://mrheadcase.github.io/isolation/**
 
 ## 🎮 Game Features
 
 ### **Enhanced Gameplay Experience**
+- ✅ **Multiple Board Sizes**: 5×5 Quick, 7×7 Classic, 9×9 Strategic, and 11×11 Epic modes
 - ✅ **Streamlined Controls**: Click directly on highlighted squares to move - no piece selection required
 - ✅ **Smooth Animations**: Fluid piece movement with spring physics using Framer Motion
 - ✅ **Smart Win Detection**: Automatic game-over detection when players have no valid moves
 - ✅ **Visual Feedback**: Clear highlighting for valid moves and removable squares
 - ✅ **Golden Starting Squares**: Permanent, unremovable starting positions
+- ✅ **Responsive Layout**: Control panel appears beside smaller boards when screen space allows
 
 ### **Game Modes & AI**
 - ✅ **Player vs Player**: Local multiplayer on the same device
-- ✅ **Player vs AI**: Multiple difficulty levels with strategic AI opponents
+- ✅ **Player vs AI**: Strategic AI opponent that adapts to different board sizes
 - ✅ **Undo System**: Take back moves with intelligent state management
+- ✅ **Dynamic Board Creation**: Automatic game restart when changing board sizes
 
 ### **Learning & Tutorial System**
 - ✅ **Interactive Tutorial**: Step-by-step introduction for new players
 - ✅ **Comprehensive Rules Guide**: Three-tab modal with complete game rules, strategy tips, and UI controls
 - ✅ **Visual Examples**: Board diagrams showing game mechanics
-- ✅ **Strategy Tips**: Advanced tactics and common mistake guidance
+- ✅ **ESC Key Support**: Close modals with keyboard navigation
+- ✅ **Scroll-to-Top**: Automatic section navigation in rules modal
 
-### **Customization & Themes**
-- ✅ **Player Colors**: Choose from 6 vibrant colors (red, blue, green, yellow, purple, orange)
-- ✅ **Dark/Light Themes**: Toggle between theme modes
-- ✅ **Responsive Design**: Optimized for desktop and mobile devices
-- ✅ **Organized Controls**: All game options centralized in an intuitive control panel
+### **Visual & UX Enhancements**
+- ✅ **Hidden Scrollbars**: Clean, minimal modal styling without visual clutter
+- ✅ **Theme Support**: Dark/light theme compatibility
+- ✅ **Victory Celebrations**: Polished win/loss announcements with proper state management
+- ✅ **Size-Responsive Design**: Board and UI scale appropriately for different game sizes
 
-## 🛠 Technical Implementation
+## 🛠 Technical Stack
 
-### **Modern React Architecture**
-- **React 18** with TypeScript for type-safe development
-- **Redux Toolkit** for predictable state management
-- **Styled Components** with comprehensive theming system
-- **Framer Motion** for smooth animations and transitions
+### **Frontend Framework**
+- **React 19.1+**: Latest React with concurrent features and improved performance
+- **TypeScript 5.9+**: Full type safety and enhanced developer experience
+- **Vite 7.0+**: Lightning-fast build tool with HMR and optimized bundling
 
-### **Advanced Features**
-- **State Persistence**: Game state maintained across browser sessions
-- **Animation System**: Layout animations for piece movement with spring physics
-- **Type Safety**: Comprehensive TypeScript definitions throughout
-- **Component Architecture**: Modular, reusable React components
+### **State Management & Logic**
+- **Redux Toolkit**: Centralized state management with RTK Query integration
+- **Immutable Updates**: Reliable state mutations with built-in debugging
+- **AI System**: Strategic game AI with dynamic board size adaptation
 
-### **Deployment & Performance**
-- **Vite Build System**: Fast development and optimized production builds
-- **GitHub Actions CI/CD**: Automated testing and deployment pipeline
-- **GitHub Pages Hosting**: Reliable, fast global content delivery
-- **Cross-Browser Compatibility**: ES2015+ with legacy fallbacks
+### **Styling & Animation**
+- **Styled Components 6.1+**: CSS-in-JS with full TypeScript support and theming
+- **Framer Motion 12.23+**: Smooth animations and layout transitions
+- **Responsive Design**: Flexible layouts that adapt to content and screen size
+
+### **Development & Build**
+- **ESLint & Prettier**: Code quality and formatting automation
+- **GitHub Actions**: Automated CI/CD pipeline with comprehensive testing
+- **Vite Build Optimization**: Tree shaking, code splitting, and asset optimization
 
 ## 🚀 Quick Start
 
@@ -66,7 +72,60 @@ npm run build        # Builds to dist/
 npm run preview      # Preview the built application
 ```
 
-## 📁 Project Structure
+## � Live Demo & Deployment
+
+### **GitHub Pages Deployment**
+- **Live URL**: https://mrheadcase.github.io/isolation/
+- **Automatic Updates**: Deploys on every push to main branch
+- **Zero-Downtime Deployment**: Atomic deployments with rollback capability
+- **Optimized Assets**: Minified and compressed for fast loading
+- **Cache Management**: Proper cache headers for optimal performance
+- **Error Handling**: Comprehensive build error reporting
+
+## 📈 Recent Updates
+
+### **v2.2 - Multiple Board Sizes (Latest)**
+- ✅ **Board Size Options**: Added 5×5, 7×7, 9×9, and 11×11 game modes
+- ✅ **Responsive Sizing**: Smaller boards use less screen space for better layout
+- ✅ **Dynamic AI**: AI strategy adapts to different board sizes and positioning
+- ✅ **Auto-Restart**: Games automatically reset when changing board sizes
+- ✅ **Layout Optimization**: Control panel displays beside smaller boards when space allows
+
+### **v2.1 - Polish & UX Refinements**
+- ✅ **Victory Modal Bug Fix**: Fixed AI mode winner display flickering issue
+- ✅ **ESC Key Support**: Added keyboard navigation to close modals (Rules & Tutorial)
+- ✅ **Scroll-to-Top**: Rules modal tabs now automatically scroll to section top
+- ✅ **Hidden Scrollbar**: Clean, minimal scrollbar styling in Rules modal
+- ✅ **Enhanced State Management**: Added winner field to prevent modal display bugs
+
+### **v2.0 - Enhanced Tutorial & UX**
+- ✅ **Reorganized Controls**: Moved all game actions to organized control panel
+- ✅ **Tutorial System**: Added comprehensive welcome tutorial and rules guide
+- ✅ **Updated Documentation**: Accurate rules reflecting current gameplay
+- ✅ **Visual Improvements**: Cleaner example boards and simplified UI
+- ✅ **Better Navigation**: Integrated tutorial and rules access in game options
+
+### **v1.5 - Animation & Polish**
+- ✅ **Smooth Animations**: Added Framer Motion for piece movement
+- ✅ **Enhanced Visuals**: Improved starting square styling and feedback
+- ✅ **Win Detection**: Fixed comprehensive win condition checking
+- ✅ **AI Improvements**: Better AI move calculation and timing
+
+## 🎯 Game Variants & Strategy
+
+### **Board Size Strategies**
+- **5×5 Quick**: Fast-paced games emphasizing early positioning and quick tactical decisions
+- **7×7 Classic**: Traditional balanced gameplay with moderate strategic depth
+- **9×9 Strategic**: Extended gameplay allowing for complex tactical planning and positioning
+- **11×11 Epic**: Maximum strategic complexity with long-term planning and advanced tactics
+
+### **Universal Game Rules**
+1. **Movement**: Players alternate moving one square in any direction (including diagonally)
+2. **Square Removal**: After each move, the current player removes one available square from the board
+3. **Winning**: The first player unable to move loses the game
+4. **Starting Squares**: Golden center squares cannot be removed and provide strategic anchors
+
+## 🎨 Project Structure
 
 ```
 src/
@@ -107,32 +166,106 @@ src/
 - **Preserve Options**: Always keep multiple escape routes open
 - **Plan Ahead**: Think several moves ahead to set up winning positions
 
-## 🎨 UI Components
+## 💻 Development Setup
 
-### **Game Board**
-- **Interactive Grid**: 7×7 responsive game board with visual feedback
-- **Piece Animation**: Smooth movement with spring physics
-- **Highlighting System**: Clear visual indicators for valid moves
-- **Turn Indicators**: Active player highlighting and status display
+### **Prerequisites**
+- Node.js 18+ (recommended: 20+)
+- npm or yarn package manager
+- Modern web browser with ES2020+ support
 
-### **Control Panel**
-- **Game Modes**: Switch between PvP and AI modes
-- **AI Difficulty**: Easy, Medium, and Hard AI opponents
-- **Player Customization**: Choose colors for both players
-- **Game Actions**: New game, undo moves, tutorial access
-- **Theme Toggle**: Switch between dark and light modes
-
-### **Tutorial System**
-- **Welcome Modal**: Quick introduction for new players
-- **Rules Guide**: Comprehensive three-tab reference
-  - **Game Rules**: Complete rules with visual examples
-  - **Strategy Guide**: Advanced tactics and tips
-  - **Controls & UI**: Interface and control explanations
-
-## 🔧 Development
-
-### **Available Scripts**
+### **Installation & Running**
 ```bash
+# Clone the repository
+git clone https://github.com/mrheadcase/isolation.git
+cd isolation
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### **Development Features**
+- **Hot Module Replacement**: Instant updates during development
+- **TypeScript Checking**: Real-time type error detection
+- **ESLint Integration**: Code quality enforcement
+- **Source Maps**: Full debugging support in development
+
+## 🤖 AI Assistant Setup Prompt
+
+To recreate this exact project with all current features, use this comprehensive prompt with any AI assistant:
+
+```
+Create a fully functional browser-based Isolation game with the following specifications:
+
+CORE GAME IMPLEMENTATION:
+- Classic Isolation board game rules with piece movement and square removal
+- Multiple board sizes: 5×5, 7×7, 9×9, and 11×11 with dynamic layouts
+- Player vs Player and Player vs AI game modes
+- Strategic AI opponent that adapts to different board sizes
+- Comprehensive win condition detection for all scenarios
+- Undo/redo functionality with full state management
+
+TECHNOLOGY STACK:
+- React 19+ with TypeScript for type-safe component development
+- Redux Toolkit for centralized state management
+- Styled Components for CSS-in-JS theming and responsive design
+- Framer Motion for smooth piece animations and layout transitions
+- Vite for fast development and optimized production builds
+
+USER EXPERIENCE FEATURES:
+- Streamlined controls: direct move selection without piece clicking
+- Smooth piece movement animations with spring physics
+- Interactive tutorial system with step-by-step guidance
+- Comprehensive rules modal with strategy guide and controls reference
+- Responsive layout that adapts to board size and screen dimensions
+- ESC key support for modal navigation and accessibility
+
+VISUAL DESIGN:
+- Dark theme with professional game board styling
+- Golden starting squares that cannot be removed
+- Clear visual feedback for valid moves and removable squares
+- Hidden scrollbars and clean modal interfaces
+- Size-responsive board scaling for optimal screen utilization
+
+DEPLOYMENT REQUIREMENTS:
+- GitHub Pages compatible build configuration
+- Vite configuration with proper base path for subdirectory deployment
+- GitHub Actions workflow for automated CI/CD pipeline
+- Comprehensive error handling and build optimization
+- Cross-browser compatibility with modern web standards
+
+CRITICAL DEPLOYMENT FIXES:
+- Use Vite 7+ without legacy plugin to avoid crypto.hash compatibility issues
+- Include proper Node.js version (20+) in GitHub Actions workflow
+- Configure GitHub Pages source to "GitHub Actions" not branch deployment
+- Implement proper asset optimization and cache management
+
+GAME STATE MANAGEMENT:
+- Comprehensive game state with board size, winner tracking, and move history
+- AI thinking indicators and tutorial mode state
+- Proper state resets when changing board sizes
+- Victory modal with accurate winner display and state management
+```
+
+This prompt captures all implemented features, technical architecture, deployment fixes, and UX enhancements needed to recreate the complete project.
+
+## � License
+
+MIT License - feel free to use this code for your own projects!
+
+## 🙏 Acknowledgments
+
+- Inspired by the classic 1970s Isolation board game
+- Built with modern web technologies for optimal performance and user experience
+- Designed for both casual players and strategic game enthusiasts
 npm run dev       # Development server with hot reload
 npm run build     # Production build with optimization
 npm run preview   # Preview production build locally

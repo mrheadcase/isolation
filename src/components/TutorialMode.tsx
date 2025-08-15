@@ -228,7 +228,7 @@ export const TutorialMode: React.FC<TutorialModeProps> = ({ isActive, onComplete
 
     // Calculate position based on board layout
     const boardSize = Math.min(window.innerHeight * 0.8, window.innerWidth * 0.8)
-    const cellSize = boardSize / 7
+    const cellSize = boardSize / game.boardSize
     const boardOffset = (window.innerWidth - boardSize) / 2
 
     const { row, col } = step.highlight.position

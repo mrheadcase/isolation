@@ -6,6 +6,7 @@ export interface Position {
 export type PlayerColor = 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange'
 export type GameMode = 'pvp' | 'ai'
 export type AIDifficulty = 'easy' | 'medium' | 'hard'
+export type BoardSize = 5 | 7 | 9 | 11
 
 export interface Player {
   color: PlayerColor
@@ -30,6 +31,7 @@ export interface GameState {
   moveHistory: Move[]
   isGameOver: boolean
   winner: 1 | 2 | null
+  boardSize: BoardSize
   showTutorial: boolean
   isAIThinking: boolean
   tutorialMode: boolean

@@ -7,9 +7,9 @@ const directions = [
 ]
 
 // Calculate the Manhattan distance to the center of the board
-const distanceToCenter = (pos: Position): number => {
-  const centerRow = 3
-  const centerCol = 3
+const distanceToCenter = (pos: Position, boardSize: number): number => {
+  const centerRow = Math.floor(boardSize / 2)
+  const centerCol = Math.floor(boardSize / 2)
   return Math.abs(pos.row - centerRow) + Math.abs(pos.col - centerCol)
 }
 
@@ -38,7 +38,8 @@ const getDistance = (pos1: Position, pos2: Position): number => {
 export const selectAIMove = (
   currentPosition: Position,
   playerPosition: Position,
-  board: (boolean | null)[][]
+  board: (boolean | null)[][],
+  boardSize: number
 ): Position => {
   let bestMove: Position | null = null
   let bestScore = -Infinity
@@ -61,7 +62,7 @@ export const selectAIMove = (
       // 1. Distance to center (closer is better)
       // 2. Number of available adjacent squares (more is better)
       // 3. Distance to player (farther is slightly better to avoid immediate capture)
-      const distCenter = distanceToCenter(pos)
+      const distCenter = distanceToCenter(pos, boardSize)
       const adjacentSquares = countAvailableAdjacent(pos, board)
       const distToPlayer = getDistance(pos, playerPosition)
       
@@ -80,10 +81,13 @@ export const selectAIMove = (
 export const selectAIRemoval = (
   aiPosition: Position,
   playerPosition: Position,
-  board: (boolean | null)[][]
+  board: (boolean | null)[][],
+  boardSize: number
 ): Position => {
-  const isStartingSquare = (row: number, col: number) => 
-    (row === 0 && col === 3) || (row === 6 && col === 3)
+  const isStartingSquare = (row: number, col: number) => {
+    const center = Math.floor(boardSize / 2)
+    return (row === 0 && col === center) || (row === boardSize - 1 && col === center)
+  }
 
   // First, look for squares one step away from the player
   for (const [dx, dy] of directions) {

@@ -1,8 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { Position, PlayerColor, GameMode, AIDifficulty, GameState } from '../types'
+import type { Position, PlayerColor, GameMode, AIDifficulty, GameState, BoardSize } from '../types'
+
+// Helper function to create a board of specified size
+const createBoard = (size: BoardSize): (boolean | null)[][] => {
+  return Array(size).fill(null).map(() => Array(size).fill(true))
+}
+
+// Helper function to get starting positions for different board sizes
+const getStartingPositions = (size: BoardSize) => {
+  const center = Math.floor(size / 2)
+  return {
+    player1: { row: 0, col: center },
+    player2: { row: size - 1, col: center }
+  }
+}
 
 const initialState: GameState = {
-  board: Array(7).fill(null).map(() => Array(7).fill(true)),
+  board: createBoard(7),
   currentPlayer: 1,
   player1: {
     color: 'blue',
@@ -19,6 +33,7 @@ const initialState: GameState = {
   moveHistory: [],
   isGameOver: false,
   winner: null,
+  boardSize: 7,
   showTutorial: true,
   isAIThinking: false,
   tutorialMode: false,
@@ -98,10 +113,26 @@ export const gameSlice = createSlice({
         state.player2.score++
       }
     },
+    setBoardSize: (state, action: PayloadAction<BoardSize>) => {
+      const newSize = action.payload
+      const positions = getStartingPositions(newSize)
+      
+      // Reset the entire game with new board size
+      state.boardSize = newSize
+      state.board = createBoard(newSize)
+      state.player1.position = positions.player1
+      state.player2.position = positions.player2
+      state.currentPlayer = 1
+      state.isGameOver = false
+      state.winner = null
+      state.moveHistory = []
+      state.isAIThinking = false
+    },
     resetGame: (state) => {
-      state.board = Array(7).fill(null).map(() => Array(7).fill(true))
-      state.player1.position = { row: 0, col: 3 }
-      state.player2.position = { row: 6, col: 3 }
+      const positions = getStartingPositions(state.boardSize)
+      state.board = createBoard(state.boardSize)
+      state.player1.position = positions.player1
+      state.player2.position = positions.player2
       state.currentPlayer = 1
       state.moveHistory = []
       state.isGameOver = false
@@ -130,6 +161,7 @@ export const {
   setAIDifficulty,
   endGame,
   resetGame,
+  setBoardSize,
   toggleTutorial,
   setAIThinking,
   setTutorialMode,

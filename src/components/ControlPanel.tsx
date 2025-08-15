@@ -7,10 +7,11 @@ import {
   resetGame,
   undoMove,
   setTutorialMode,
-  setShowRulesModal
+  setShowRulesModal,
+  setBoardSize
 } from '../store/gameSlice'
 import { toggleTheme } from '../store/themeSlice'
-import type { PlayerColor, AIDifficulty, GameState, RootState, ThemeState } from '../types'
+import type { PlayerColor, AIDifficulty, GameState, RootState, ThemeState, BoardSize } from '../types'
 
 const Panel = styled.div`
   background-color: ${props => props.theme.secondaryColor};
@@ -93,6 +94,37 @@ export const ControlPanel = () => {
   return (
     <Panel>
       <GameTitle>Isolation Game</GameTitle>
+      
+      <Section>
+        <Title>Board Size</Title>
+        <ButtonGroup>
+          <button
+            onClick={() => dispatch(setBoardSize(5))}
+            style={{ opacity: game.boardSize === 5 ? 1 : 0.6 }}
+          >
+            5×5 Quick
+          </button>
+          <button
+            onClick={() => dispatch(setBoardSize(7))}
+            style={{ opacity: game.boardSize === 7 ? 1 : 0.6 }}
+          >
+            7×7 Classic
+          </button>
+          <button
+            onClick={() => dispatch(setBoardSize(9))}
+            style={{ opacity: game.boardSize === 9 ? 1 : 0.6 }}
+          >
+            9×9 Strategic
+          </button>
+          <button
+            onClick={() => dispatch(setBoardSize(11))}
+            style={{ opacity: game.boardSize === 11 ? 1 : 0.6 }}
+          >
+            11×11 Epic
+          </button>
+        </ButtonGroup>
+      </Section>
+
       <Section>
         <Title>Game Mode</Title>
         <ButtonGroup>

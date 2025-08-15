@@ -288,7 +288,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose, onStart
             <Section>
               <SectionTitle>Game Setup</SectionTitle>
               <List>
-                <li>Isolation is played on a 7×7 grid with 49 squares</li>
+                <li>Isolation is played on a square grid (board sizes: 5×5, 7×7, 9×9, or 11×11)</li>
                 <li>Two players start at opposite ends of the center column</li>
                 <li>Player 1 (red) starts at the top, Player 2 (blue) at the bottom</li>
                 <li>The golden starting squares are permanent and cannot be removed</li>

@@ -56,22 +56,39 @@ const BoardContainer = styled.div<{ theme: DefaultTheme }>`
   gap: 16px;
 `
 
-const Board = styled.div<{ theme: DefaultTheme }>`
+const Board = styled.div<{ theme: DefaultTheme; boardSize: number }>`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(${props => props.boardSize}, 1fr);
   gap: 4px;
   padding: 8px;
   background-color: ${props => props.theme.secondaryColor};
   border-radius: 8px;
-  width: min(80vh, 80vw);
-  height: min(80vh, 80vw);
+  width: ${props => {
+    // Scale board size based on number of squares
+    // Smaller boards use less space to allow side-by-side layout
+    const baseSize = props.boardSize <= 5 ? 400 : 
+                     props.boardSize <= 7 ? 500 : 
+                     props.boardSize <= 9 ? 600 : 700;
+    return `min(${baseSize}px, 80vh, 80vw)`;
+  }};
+  height: ${props => {
+    const baseSize = props.boardSize <= 5 ? 400 : 
+                     props.boardSize <= 7 ? 500 : 
+                     props.boardSize <= 9 ? 600 : 700;
+    return `min(${baseSize}px, 80vh, 80vw)`;
+  }};
 `
 
-const ScoreBoard = styled.div<{ theme: DefaultTheme }>`
+const ScoreBoard = styled.div<{ theme: DefaultTheme; boardSize: number }>`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: min(80vh, 80vw);
+  max-width: ${props => {
+    const baseSize = props.boardSize <= 5 ? 400 : 
+                     props.boardSize <= 7 ? 500 : 
+                     props.boardSize <= 9 ? 600 : 700;
+    return `min(${baseSize}px, 80vh, 80vw)`;
+  }};
   margin-bottom: 16px;
 `
 
@@ -326,13 +343,14 @@ export const GameBoard = () => {
   }
 
   const isStartingPosition = (pos: Position) => {
-    return (pos.row === 0 && pos.col === 3) || (pos.row === 6 && pos.col === 3)
+    const center = Math.floor(game.boardSize / 2)
+    return (pos.row === 0 && pos.col === center) || (pos.row === game.boardSize - 1 && pos.col === center)
   }
 
   const hasValidMoves = (playerPosition: Position) => {
     // Check all adjacent squares
-    for (let row = Math.max(0, playerPosition.row - 1); row <= Math.min(6, playerPosition.row + 1); row++) {
-      for (let col = Math.max(0, playerPosition.col - 1); col <= Math.min(6, playerPosition.col + 1); col++) {
+    for (let row = Math.max(0, playerPosition.row - 1); row <= Math.min(game.boardSize - 1, playerPosition.row + 1); row++) {
+      for (let col = Math.max(0, playerPosition.col - 1); col <= Math.min(game.boardSize - 1, playerPosition.col + 1); col++) {
         // Skip the current position
         if (row === playerPosition.row && col === playerPosition.col) continue;
         
@@ -386,7 +404,8 @@ export const GameBoard = () => {
       const aiMove = selectAIMove(
         game.player2.position,
         game.player1.position,
-        game.board
+        game.board,
+        game.boardSize
       );
       
       dispatch(makeMove({
@@ -407,7 +426,8 @@ export const GameBoard = () => {
       const squareToRemove = selectAIRemoval(
         aiMove,
         game.player1.position,
-        game.board
+        game.board,
+        game.boardSize
       );
       
       dispatch(makeMove({
@@ -430,7 +450,7 @@ export const GameBoard = () => {
 
   return (
     <BoardContainer>
-      <ScoreBoard>
+      <ScoreBoard boardSize={game.boardSize}>
         <PlayerScore
           isActive={game.currentPlayer === 1}
           color={game.player1.color}
@@ -481,7 +501,7 @@ export const GameBoard = () => {
         }}
       />
 
-      <Board>
+      <Board boardSize={game.boardSize}>
         {game.board.map((row: (boolean | null)[], i: number) =>
           row.map((cell: boolean | null, j: number) => {
             const currentPlayer = game.currentPlayer === 1 ? game.player1 : game.player2
@@ -503,14 +523,14 @@ export const GameBoard = () => {
                 isSelected={selectedPosition?.row === i && selectedPosition?.col === j}
                 isValid={isValidMove || false}
                 canBeRemoved={canBeRemoved || false}
-                isStartingSquare={(i === 0 && j === 3) || (i === 6 && j === 3)}
+                isStartingSquare={isStartingPosition({ row: i, col: j })}
                 onClick={() => handleCellClick(i, j)}
                 whileHover={{ 
-                  scale: ((cell !== null && (isValidMove || canBeRemoved)) && !((i === 0 && j === 3) || (i === 6 && j === 3))) ? 0.95 : 1,
+                  scale: ((cell !== null && (isValidMove || canBeRemoved)) && !isStartingPosition({ row: i, col: j })) ? 0.95 : 1,
                   transition: { duration: 0 }
                 }}
                 whileTap={{ 
-                  scale: ((cell !== null && (isValidMove || canBeRemoved)) && !((i === 0 && j === 3) || (i === 6 && j === 3))) ? 0.9 : 1,
+                  scale: ((cell !== null && (isValidMove || canBeRemoved)) && !isStartingPosition({ row: i, col: j })) ? 0.9 : 1,
                   transition: { duration: 0 }
                 }}
               />
