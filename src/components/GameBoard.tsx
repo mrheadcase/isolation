@@ -405,7 +405,8 @@ export const GameBoard = () => {
         game.player2.position,
         game.player1.position,
         game.board,
-        game.boardSize
+        game.boardSize,
+        game.aiDifficulty
       );
       
       dispatch(makeMove({
@@ -427,7 +428,8 @@ export const GameBoard = () => {
         aiMove,
         game.player1.position,
         game.board,
-        game.boardSize
+        game.boardSize,
+        game.aiDifficulty
       );
       
       dispatch(makeMove({

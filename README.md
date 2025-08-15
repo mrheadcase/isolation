@@ -15,9 +15,13 @@ A modern, polished web implementation of the classic 1970s board game Isolation,
 
 ### **Game Modes & AI**
 - ✅ **Player vs Player**: Local multiplayer on the same device
-- ✅ **Player vs AI**: Strategic AI opponent that adapts to different board sizes
+- ✅ **Player vs AI**: Three distinct difficulty levels with genuinely different strategies
+  - **Easy AI**: Makes suboptimal moves and random decisions for beginners
+  - **Medium AI**: Balanced strategic play with moderate challenge
+  - **Hard AI**: Advanced mobility analysis and strategic square removal
 - ✅ **Undo System**: Take back moves with intelligent state management
 - ✅ **Dynamic Board Creation**: Automatic game restart when changing board sizes
+- ✅ **Adaptive AI Strategy**: AI difficulty scales with board size complexity
 
 ### **Learning & Tutorial System**
 - ✅ **Interactive Tutorial**: Step-by-step introduction for new players
@@ -84,7 +88,14 @@ npm run preview      # Preview the built application
 
 ## 📈 Recent Updates
 
-### **v2.2 - Multiple Board Sizes (Latest)**
+### **v2.3 - AI Difficulty Implementation (Latest)**
+- ✅ **Genuine AI Difficulty Levels**: Easy, Medium, and Hard now play with distinct strategies
+- ✅ **Easy AI**: Makes suboptimal moves (30% random decisions) and reduces mobility focus
+- ✅ **Medium AI**: Balanced strategic play with slight randomness for variety
+- ✅ **Hard AI**: Advanced mobility analysis and strategic square removal to limit player options
+- ✅ **Adaptive Strategies**: AI behavior scales appropriately with board size complexity
+
+### **v2.2 - Multiple Board Sizes**
 - ✅ **Board Size Options**: Added 5×5, 7×7, 9×9, and 11×11 game modes
 - ✅ **Responsive Sizing**: Smaller boards use less screen space for better layout
 - ✅ **Dynamic AI**: AI strategy adapts to different board sizes and positioning
@@ -112,6 +123,20 @@ npm run preview      # Preview the built application
 - ✅ **AI Improvements**: Better AI move calculation and timing
 
 ## 🎯 Game Variants & Strategy
+
+### **AI Difficulty Strategies**
+- **Easy AI**: Perfect for beginners learning the game
+  - Makes intentionally suboptimal moves (30% random decisions)
+  - Reduced focus on mobility and strategic positioning
+  - Allows players to learn tactics without overwhelming opposition
+- **Medium AI**: Balanced challenge for casual players
+  - Uses standard strategic scoring with slight randomness
+  - Focuses on mobility, center control, and distance management
+  - Provides engaging gameplay without being frustrating
+- **Hard AI**: Advanced strategic opponent for experienced players
+  - Analyzes all possible square removals to minimize player mobility
+  - Enhanced mobility weighting and board size adaptation
+  - Provides genuine strategic challenge requiring careful planning
 
 ### **Board Size Strategies**
 - **5×5 Quick**: Fast-paced games emphasizing early positioning and quick tactical decisions
@@ -209,7 +234,11 @@ CORE GAME IMPLEMENTATION:
 - Classic Isolation board game rules with piece movement and square removal
 - Multiple board sizes: 5×5, 7×7, 9×9, and 11×11 with dynamic layouts
 - Player vs Player and Player vs AI game modes
-- Strategic AI opponent that adapts to different board sizes
+- Three distinct AI difficulty levels with genuinely different strategies:
+  * Easy AI: 30% random decisions, reduced mobility focus for beginners
+  * Medium AI: Balanced strategic play with slight randomness for variety
+  * Hard AI: Advanced mobility analysis and strategic square removal
+- Strategic AI opponents that adapt to different board sizes
 - Comprehensive win condition detection for all scenarios
 - Undo/redo functionality with full state management
 
@@ -251,8 +280,10 @@ CRITICAL DEPLOYMENT FIXES:
 GAME STATE MANAGEMENT:
 - Comprehensive game state with board size, winner tracking, and move history
 - AI thinking indicators and tutorial mode state
+- Three-tier AI difficulty system with distinct behavioral patterns
 - Proper state resets when changing board sizes
 - Victory modal with accurate winner display and state management
+- AI difficulty persistence across game sessions
 ```
 
 This prompt captures all implemented features, technical architecture, deployment fixes, and UX enhancements needed to recreate the complete project.
